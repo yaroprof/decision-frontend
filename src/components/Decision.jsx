@@ -8,6 +8,8 @@ const Decision = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
+  const API_BASE = import.meta.env.VITE_API_BASE_URL;
+
   useEffect(() => {
     const token = localStorage.getItem('token');
     setIsLoggedIn(!!token);
@@ -27,18 +29,14 @@ const Decision = () => {
     }
 
     try {
-      const response = await axios.get('http://localhost:5000/api/history', {
+      const response = await axios.get(`${API_BASE}/api/history`, {
         headers: { Authorization: `Bearer ${token}` },
       });
 
       if (Array.isArray(response.data)) {
         const formatted = response.data.flatMap((item) => [
-          item.userMessage
-            ? { user: 'You', text: item.userMessage }
-            : null,
-          item.aiResponse
-            ? { user: 'Bot', text: item.aiResponse }
-            : null,
+          item.userMessage ? { user: 'You', text: item.userMessage } : null,
+          item.aiResponse ? { user: 'Bot', text: item.aiResponse } : null,
         ].filter(Boolean));
         setDecisions(formatted);
       } else {
@@ -64,7 +62,7 @@ const Decision = () => {
 
     try {
       const response = await axios.post(
-        'http://localhost:5000/api',
+        `${API_BASE}/api`,
         { message },
         { headers: { Authorization: `Bearer ${token}` } }
       );
@@ -80,7 +78,6 @@ const Decision = () => {
       <div className="w-full max-w-3xl">
         <h2 className="text-3xl font-normal text-center mb-6 tracking-wide">Decision Insight</h2>
 
-      
         <div className="mb-4 flex justify-center gap-2">
           {isLoggedIn ? (
             <>
@@ -115,9 +112,8 @@ const Decision = () => {
           )}
         </div>
 
-        {/* Chat box */}
         <div className="bg-gray-800 rounded-lg p-4 mb-6 space-y-3 max-h-[40rem] overflow-y-auto shadow-inner">
-        {decisions
+          {decisions
             .filter((d) => d.user && d.text && d.text.trim())
             .map((d, i) => {
               const isUser = d.user.toLowerCase() === 'you';
@@ -142,7 +138,6 @@ const Decision = () => {
             })}
         </div>
 
-        {/* Input field and analyze button */}
         <div className="flex items-center gap-2">
           <input
             type="text"
