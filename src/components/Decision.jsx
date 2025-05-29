@@ -80,7 +80,7 @@ const Decision = () => {
       <div className="w-full max-w-3xl">
         <h2 className="text-3xl font-normal text-center mb-6 tracking-wide">Decision Insight</h2>
 
-        {/* Динамічні кнопки */}
+      
         <div className="mb-4 flex justify-center gap-2">
           {isLoggedIn ? (
             <>

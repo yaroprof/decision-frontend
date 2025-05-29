@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; // Додаємо useNavigate
+import { useNavigate } from 'react-router-dom'; // Дод. useNavigate
 
 const Register = () => {
   const [email, setEmail] = useState('');
@@ -10,14 +10,14 @@ const Register = () => {
 
   const handleRegister = async (e) => {
     e.preventDefault();
-    const trimmedEmail = email.trim(); // Прибираємо пробіли
+    const trimmedEmail = email.trim(); // Приб. пробіли
     if (!trimmedEmail) {
       setError('Email cannot be empty');
       return;
     }
     try {
       const response = await axios.post('http://localhost:5000/api/auth/register', {
-        email: trimmedEmail, // Використовуємо обрізаний email
+        email: trimmedEmail, // Використ.обрізаний email
         password,
       });
       const { token } = response.data;
