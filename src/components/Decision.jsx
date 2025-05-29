@@ -8,7 +8,9 @@ const Decision = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const navigate = useNavigate();
 
-  const API_BASE = import.meta.env.VITE_API_BASE_URL;
+  const API_BASE = import.meta.env.VITE_API_BASE_URL || 'https://decision-backend.onrender.com';
+
+  console.log('API_BASE:', API_BASE);
 
   useEffect(() => {
     const token = localStorage.getItem('token');
