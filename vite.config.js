@@ -7,4 +7,8 @@ export default defineConfig({
     react(), 
     tailwindcss(),
   ],
+  define: {
+    'process.env': process.env, // якщо потрібно явно прокидати ENV
+  }
 });
+
